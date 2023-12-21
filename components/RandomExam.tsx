@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import questionSmallObj from "../data/questions-small.json";
 
@@ -54,19 +54,19 @@ const RandomExam = () => {
   const imageRef = useRef<HTMLImageElement | null>(null);
   const timerIdRef = useRef<NodeJS.Timeout | null>(null);
 
-  const videoEventCanPlayThrough = () => {
+  const videoEventCanPlayThrough = useCallback(() => {
     console.log("video canplaythrough");
-  };
+  }, []);
 
-  const videoEventEnded = () => {
+  const videoEventEnded = useCallback(() => {
     console.log("video ended");
     nextQuestion();
-  };
+  }, []);
 
-  const imageEvent = () => {
+  const imageEvent = useCallback(() => {
     console.log("image load");
     nextQuestion();
-  };
+  }, []);
 
   useEffect(() => {
     videoRef.current?.addEventListener("canplaythrough", videoEventCanPlayThrough);
@@ -79,11 +79,14 @@ const RandomExam = () => {
       imageRef.current?.removeEventListener("load", imageEvent);
       if (timerIdRef.current) clearTimeout(timerIdRef.current);
     };
-  }, [index, isStarted]);
+  }, [index, isStarted, videoRef.current, imageRef.current, videoEventCanPlayThrough, videoEventEnded, imageEvent]);
 
   const startExam = () => {
     setIsStarted(true);
     setIndex(0);
+
+    // request full page
+    document.documentElement.requestFullscreen();
   };
 
   const nextQuestion = () => {
@@ -113,6 +116,7 @@ const RandomExam = () => {
             {isVideo ? (
               <video ref={videoRef} className="w-4/5" src={src} controls autoPlay />
             ) : (
+              // eslint-disable-next-line @next/next/no-img-element
               <img ref={imageRef} className="w-4/5" src={src} alt={text} />
             )}
           </div>
@@ -134,6 +138,7 @@ const RandomExam = () => {
                     {isFileVideo(src) ? (
                       <video className="w-[50px]" src={src} controls />
                     ) : (
+                      // eslint-disable-next-line @next/next/no-img-element
                       <img className="w-[50px]" src={src} alt={question.text} />
                     )}
                     {i + 1}. {question.text}
