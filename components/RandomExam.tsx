@@ -58,28 +58,39 @@ const RandomExam = () => {
     console.log("video canplaythrough");
   }, []);
 
+  const nextQuestion = useCallback(() => {
+    if (index === 31) return;
+
+    timerIdRef.current = setTimeout(() => {
+      setIndex((prevIndex) => prevIndex + 1);
+    }, 500);
+  }, [index]);
+
   const videoEventEnded = useCallback(() => {
     console.log("video ended");
     nextQuestion();
-  }, []);
+  }, [nextQuestion]);
 
   const imageEvent = useCallback(() => {
     console.log("image load");
     nextQuestion();
-  }, []);
+  }, [nextQuestion]);
 
   useEffect(() => {
-    videoRef.current?.addEventListener("canplaythrough", videoEventCanPlayThrough);
-    videoRef.current?.addEventListener("ended", videoEventEnded);
-    imageRef.current?.addEventListener("load", imageEvent);
+    const cachedVideoRef = videoRef.current;
+    const cachedImageRef = imageRef.current;
+
+    cachedVideoRef?.addEventListener("canplaythrough", videoEventCanPlayThrough);
+    cachedVideoRef?.addEventListener("ended", videoEventEnded);
+    cachedImageRef?.addEventListener("load", imageEvent);
 
     return () => {
-      videoRef.current?.removeEventListener("canplaythrough", videoEventCanPlayThrough);
-      videoRef.current?.removeEventListener("ended", videoEventEnded);
-      imageRef.current?.removeEventListener("load", imageEvent);
+      cachedVideoRef?.removeEventListener("canplaythrough", videoEventCanPlayThrough);
+      cachedVideoRef?.removeEventListener("ended", videoEventEnded);
+      cachedImageRef?.removeEventListener("load", imageEvent);
       if (timerIdRef.current) clearTimeout(timerIdRef.current);
     };
-  }, [index, isStarted, videoRef.current, imageRef.current, videoEventCanPlayThrough, videoEventEnded, imageEvent]);
+  }, [index, isStarted, videoEventCanPlayThrough, videoEventEnded, imageEvent]);
 
   const startExam = () => {
     setIsStarted(true);
@@ -87,14 +98,6 @@ const RandomExam = () => {
 
     // request full page
     document.documentElement.requestFullscreen();
-  };
-
-  const nextQuestion = () => {
-    if (index === 31) return;
-
-    timerIdRef.current = setTimeout(() => {
-      setIndex((prevIndex) => prevIndex + 1);
-    }, 500);
   };
 
   const isFileVideo = (m: string) => m.includes(".mp4");
