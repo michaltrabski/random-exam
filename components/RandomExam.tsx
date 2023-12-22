@@ -36,7 +36,7 @@ export interface QuestionSmallObj {
 
 const MEDIA_FOLDER = `${process.env.NEXT_PUBLIC_MEDIA_LOCATION}size-720/`;
 const START_INDEX = 0;
-const GO_FULL_SCREEN = false;
+const GO_FULL_SCREEN = true;
 const NEXT_QUESTION_DELAY = 999999;
 const NEXT_QUESTION_DELAY_FALLBACK = 20 * 1000; // question will change ewery 20s
 
