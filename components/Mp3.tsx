@@ -1,7 +1,7 @@
 "use client";
 
 import { textToSlug160 } from "@/helpers/helpers";
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
 
 interface Mp3Props {
   text: string;
@@ -25,7 +25,7 @@ export const Mp3: FC<Mp3Props> = ({ text, secondaryText, secondaryTextCallback, 
   const handlePause = () => setMp3State(() => "pause");
   const handleError = () => setMp3State(() => "error");
 
-  const handleEnded = () => {
+  const handleEnded = useCallback(() => {
     if (secondaryText) {
       timeoutRef.current = setTimeout(() => {
         setTextToPlay(() => secondaryText);
@@ -33,7 +33,7 @@ export const Mp3: FC<Mp3Props> = ({ text, secondaryText, secondaryTextCallback, 
       }, SECONDARY_TEXT_DELAY);
     }
     setMp3State(() => "ended");
-  };
+  }, [secondaryText, secondaryTextCallback]);
 
   useEffect(() => {
     console.log(text, "\n", secondaryText);
