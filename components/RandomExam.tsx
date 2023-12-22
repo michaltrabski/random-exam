@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import questionSmallObj from "../data/questions-small.json";
+import ExamEndedView from "./ExamEndedView";
 
 export interface CategoriesObj {
   categoriesCount: number;
@@ -32,6 +33,10 @@ export interface QuestionSmallObj {
 }
 
 export const MEDIA_FOLDER = `${process.env.NEXT_PUBLIC_MEDIA_LOCATION}size-720/`;
+const START_INDEX = 25;
+const GO_FULL_SCREEN = true;
+const NEXT_QUESTION_DELAY = 999999;
+const NEXT_QUESTION_DELAY_FALLBACK = 15 * 1000;
 
 const RandomExam = () => {
   const [questions, setQuestions] = useState<QuestionSmall[]>([]);
@@ -47,8 +52,9 @@ const RandomExam = () => {
     setQuestions(() => questions32);
   }, []);
 
-  const [index, setIndex] = useState(0);
-  const [isStarted, setIsStarted] = useState(false);
+  const [index, setIndex] = useState(START_INDEX);
+  const [isStarted, setIsStarted] = useState(() => false);
+  const [isEnded, setIsEnded] = useState(false);
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const imageRef = useRef<HTMLImageElement | null>(null);
@@ -59,23 +65,55 @@ const RandomExam = () => {
     console.log("video canplaythrough");
   }, []);
 
+  const endExam = useCallback(() => {
+    setIsStarted(false);
+    setIsEnded(true);
+  }, []);
+
   const nextQuestion = useCallback(() => {
-    if (index === 31) return;
+    console.log("nextQuestion", { index, isStarted });
+    if (!isStarted) {
+      return;
+    }
+
+    if (index > 32) {
+      endExam();
+      return;
+    }
 
     timerIdRef.current = setTimeout(() => {
       setIndex((prevIndex) => prevIndex + 1);
-    }, 2000);
-  }, [index]);
+    }, NEXT_QUESTION_DELAY);
+  }, [index, endExam, isStarted]);
 
   useEffect(() => {
+    if (!isStarted) {
+      return;
+    }
+
+    if (index > 31) {
+      endExam();
+      return;
+    }
+
     masterTimerIdRef.current = setTimeout(() => {
+      if (index > 31) {
+        if (masterTimerIdRef.current) {
+          clearTimeout(masterTimerIdRef.current);
+        }
+
+        return;
+      }
+
       setIndex((prevIndex) => prevIndex + 1);
-    }, 20000);
+    }, NEXT_QUESTION_DELAY_FALLBACK);
 
     return () => {
-      if (masterTimerIdRef.current) clearTimeout(masterTimerIdRef.current);
+      if (masterTimerIdRef.current) {
+        clearTimeout(masterTimerIdRef.current);
+      }
     };
-  }, [index]);
+  }, [index, isStarted, endExam]);
 
   const videoEventEnded = useCallback(() => {
     console.log("video ended");
@@ -107,16 +145,23 @@ const RandomExam = () => {
 
   const startExam = () => {
     setIsStarted(true);
-    setIndex(0);
+    setIndex(START_INDEX);
 
-    // request full page
-    document.documentElement.requestFullscreen();
+    if (GO_FULL_SCREEN) {
+      document.documentElement.requestFullscreen();
+    }
   };
 
   const isFileVideo = (m: string) => m.includes(".mp4");
   const currentQuestion = questions[index];
 
-  if (!currentQuestion) return null;
+  if (isEnded) {
+    return <ExamEndedView />;
+  }
+
+  if (!currentQuestion) {
+    return <div>Ładowanie pytań</div>;
+  }
 
   const { text, media } = currentQuestion;
 
@@ -124,9 +169,9 @@ const RandomExam = () => {
   const isVideo = isFileVideo(src);
 
   return (
-    <>
-      {isStarted && (
-        <div className="relative ">
+    <div>
+      {isStarted && !isEnded && (
+        <>
           <div className="fixed bottom-10 w-4/5">
             {isVideo ? (
               <video ref={videoRef} className="w-full" src={src} autoPlay />
@@ -135,16 +180,16 @@ const RandomExam = () => {
               <img ref={imageRef} className="w-full" src={src} alt={text} />
             )}
           </div>
-          <div className="w-4/5 p-1 fixed bottom-0 bg-slate-600 text-white">{text}</div>
-
-          <div className="fixed right-0">
-            <div>{index}</div>
-            <div onClick={nextQuestion}>next</div>
+          <div className="w-4/5 p-1 fixed bottom-0 bg-slate-600 text-white">
+            {index + 1}. {text}
           </div>
-        </div>
-      )}
 
-      {!isStarted && (
+          <div className="fixed right-0" onClick={() => setIndex((prev) => prev + 1)}>
+            next
+          </div>
+        </>
+      )}
+      {!isStarted && !isEnded && (
         <>
           <h1>Random Exam {questions.length} pytań.</h1>
           <p onClick={startExam}>Start</p>
@@ -169,7 +214,7 @@ const RandomExam = () => {
           </ul>
         </>
       )}
-    </>
+    </div>
   );
 };
 
