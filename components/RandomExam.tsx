@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import questionSmallObj from "../data/questions-small.json";
 import ExamEndedView from "./ExamEndedView";
 import { Mp3 } from "./Mp3";
+import { generateSingleExam } from "@/helpers/helpers";
 
 export interface CategoriesObj {
   categoriesCount: number;
@@ -46,10 +47,7 @@ const RandomExam = () => {
   useEffect(() => {
     const { questionsSmall } = questionSmallObj as QuestionSmallObj;
 
-    const questions32 = questionsSmall
-      .filter((question) => question.categories.includes("b"))
-      .sort(() => Math.random() - 0.5)
-      .slice(0, 32);
+    const questions32 = generateSingleExam(questionsSmall, "b", 0);
 
     setQuestions(() => questions32);
   }, []);
@@ -198,7 +196,11 @@ const RandomExam = () => {
               <span> {index + 1}. </span>
               <Mp3 text={text} secondaryText={secondaryText} secondaryTextCallback={handleShowAnswer} autoPlay /> {text}{" "}
             </p>
-            {showAnswer && <p>Odpowiedź: {secondaryText} </p>}
+            {showAnswer && (
+              <p>
+                Odpowiedź {a ? `${r.toUpperCase()}.` : ""} {secondaryText}{" "}
+              </p>
+            )}
           </div>
 
           <div
