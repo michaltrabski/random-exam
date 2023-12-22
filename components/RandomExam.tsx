@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import questionSmallObj from "../data/questions-small.json";
 import ExamEndedView from "./ExamEndedView";
+import { Mp3 } from "./Mp3";
 
 export interface CategoriesObj {
   categoriesCount: number;
@@ -32,11 +33,11 @@ export interface QuestionSmallObj {
   questionsSmall: QuestionSmall[];
 }
 
-export const MEDIA_FOLDER = `${process.env.NEXT_PUBLIC_MEDIA_LOCATION}size-720/`;
-const START_INDEX = 25;
+const MEDIA_FOLDER = `${process.env.NEXT_PUBLIC_MEDIA_LOCATION}size-720/`;
+const START_INDEX = 30 - 1;
 const GO_FULL_SCREEN = true;
 const NEXT_QUESTION_DELAY = 999999;
-const NEXT_QUESTION_DELAY_FALLBACK = 15 * 1000;
+const NEXT_QUESTION_DELAY_FALLBACK = 9 * 1000;
 
 const RandomExam = () => {
   const [questions, setQuestions] = useState<QuestionSmall[]>([]);
@@ -181,7 +182,7 @@ const RandomExam = () => {
             )}
           </div>
           <div className="w-4/5 p-1 fixed bottom-0 bg-slate-600 text-white">
-            {index + 1}. {text}
+            {index + 1}. <Mp3 text={text} autoPlay /> {text}
           </div>
 
           <div className="fixed right-0" onClick={() => setIndex((prev) => prev + 1)}>
@@ -206,7 +207,7 @@ const RandomExam = () => {
                       // eslint-disable-next-line @next/next/no-img-element
                       <img className="w-[50px]" src={src} alt={question.text} />
                     )}
-                    {i + 1}. {question.text}
+                    <Mp3 text={question.text} /> {i + 1}. {question.text}
                   </div>
                 </li>
               );
