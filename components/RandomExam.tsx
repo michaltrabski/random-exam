@@ -53,6 +53,7 @@ const RandomExam = () => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const imageRef = useRef<HTMLImageElement | null>(null);
   const timerIdRef = useRef<NodeJS.Timeout | null>(null);
+  const masterTimerIdRef = useRef<NodeJS.Timeout | null>(null);
 
   const videoEventCanPlayThrough = useCallback(() => {
     console.log("video canplaythrough");
@@ -63,7 +64,17 @@ const RandomExam = () => {
 
     timerIdRef.current = setTimeout(() => {
       setIndex((prevIndex) => prevIndex + 1);
-    }, 500);
+    }, 2000);
+  }, [index]);
+
+  useEffect(() => {
+    masterTimerIdRef.current = setTimeout(() => {
+      setIndex((prevIndex) => prevIndex + 1);
+    }, 20000);
+
+    return () => {
+      if (masterTimerIdRef.current) clearTimeout(masterTimerIdRef.current);
+    };
   }, [index]);
 
   const videoEventEnded = useCallback(() => {
@@ -88,7 +99,9 @@ const RandomExam = () => {
       cachedVideoRef?.removeEventListener("canplaythrough", videoEventCanPlayThrough);
       cachedVideoRef?.removeEventListener("ended", videoEventEnded);
       cachedImageRef?.removeEventListener("load", imageEvent);
-      if (timerIdRef.current) clearTimeout(timerIdRef.current);
+      if (timerIdRef.current) {
+        clearTimeout(timerIdRef.current);
+      }
     };
   }, [index, isStarted, videoEventCanPlayThrough, videoEventEnded, imageEvent]);
 
@@ -107,23 +120,27 @@ const RandomExam = () => {
 
   const { text, media } = currentQuestion;
 
-  const src = `${MEDIA_FOLDER}${media}`;
+  const src = media ? `${MEDIA_FOLDER}${media}` : "/placeholder_1.png";
   const isVideo = isFileVideo(src);
 
   return (
     <>
-      <p onClick={nextQuestion}>index={index}</p>
       {isStarted && (
-        <div className="border border-green-500 relative">
-          <div className="fixed bottom-10">
+        <div className="relative ">
+          <div className="fixed bottom-10 w-4/5">
             {isVideo ? (
-              <video ref={videoRef} className="w-4/5" src={src} controls autoPlay />
+              <video ref={videoRef} className="w-full" src={src} autoPlay />
             ) : (
               // eslint-disable-next-line @next/next/no-img-element
-              <img ref={imageRef} className="w-4/5" src={src} alt={text} />
+              <img ref={imageRef} className="w-full" src={src} alt={text} />
             )}
           </div>
           <div className="w-4/5 p-1 fixed bottom-0 bg-slate-600 text-white">{text}</div>
+
+          <div className="fixed right-0">
+            <div>{index}</div>
+            <div onClick={nextQuestion}>next</div>
+          </div>
         </div>
       )}
 
@@ -133,7 +150,7 @@ const RandomExam = () => {
           <p onClick={startExam}>Start</p>
           <ul>
             {questions.map((question, i) => {
-              const src = `${MEDIA_FOLDER}${question.media}`;
+              const src = question.media ? `${MEDIA_FOLDER}${question.media}` : "/placeholder_1.png";
 
               return (
                 <li key={question.id}>
