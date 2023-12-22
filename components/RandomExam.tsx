@@ -35,12 +35,13 @@ export interface QuestionSmallObj {
 
 const MEDIA_FOLDER = `${process.env.NEXT_PUBLIC_MEDIA_LOCATION}size-720/`;
 const START_INDEX = 0;
-const GO_FULL_SCREEN = true;
+const GO_FULL_SCREEN = false;
 const NEXT_QUESTION_DELAY = 999999;
 const NEXT_QUESTION_DELAY_FALLBACK = 20 * 1000; // question will change ewery 20s
 
 const RandomExam = () => {
   const [questions, setQuestions] = useState<QuestionSmall[]>([]);
+  const [showAnswer, setShowAnswer] = useState(false);
 
   useEffect(() => {
     const { questionsSmall } = questionSmallObj as QuestionSmallObj;
@@ -59,11 +60,13 @@ const RandomExam = () => {
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const imageRef = useRef<HTMLImageElement | null>(null);
-  const timerIdRef = useRef<NodeJS.Timeout | null>(null);
-  const masterTimerIdRef = useRef<NodeJS.Timeout | null>(null);
+  const timerIdRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const masterTimerIdRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const videoEventCanPlayThrough = useCallback(() => {
-    console.log("video canplaythrough");
+  const videoEventCanPlayThrough = useCallback(() => {}, []);
+
+  const handleShowAnswer = useCallback(() => {
+    setShowAnswer(true);
   }, []);
 
   const endExam = useCallback(() => {
@@ -72,7 +75,6 @@ const RandomExam = () => {
   }, []);
 
   const nextQuestion = useCallback(() => {
-    console.log("nextQuestion", { index, isStarted });
     if (!isStarted) {
       return;
     }
@@ -84,6 +86,7 @@ const RandomExam = () => {
 
     timerIdRef.current = setTimeout(() => {
       setIndex((prevIndex) => prevIndex + 1);
+      setShowAnswer(false);
     }, NEXT_QUESTION_DELAY);
   }, [index, endExam, isStarted]);
 
@@ -107,6 +110,7 @@ const RandomExam = () => {
       }
 
       setIndex((prevIndex) => prevIndex + 1);
+      setShowAnswer(false);
     }, NEXT_QUESTION_DELAY_FALLBACK);
 
     return () => {
@@ -147,6 +151,7 @@ const RandomExam = () => {
   const startExam = () => {
     setIsStarted(true);
     setIndex(START_INDEX);
+    setShowAnswer(false);
 
     if (GO_FULL_SCREEN) {
       document.documentElement.requestFullscreen();
@@ -164,10 +169,17 @@ const RandomExam = () => {
     return <div>Ładowanie pytań</div>;
   }
 
-  const { text, media } = currentQuestion;
+  const { text, media, r, a, b, c } = currentQuestion;
 
   const src = media ? `${MEDIA_FOLDER}${media}` : "/placeholder_1.png";
   const isVideo = isFileVideo(src);
+
+  let secondaryText = "";
+  if (r === "t") secondaryText = "tak";
+  if (r === "n") secondaryText = "nie";
+  if (r === "a") secondaryText = a;
+  if (r === "b") secondaryText = b;
+  if (r === "c") secondaryText = c;
 
   return (
     <div>
@@ -182,10 +194,20 @@ const RandomExam = () => {
             )}
           </div>
           <div className="w-4/5 p-1 fixed bottom-0 bg-slate-600 text-white">
-            {index + 1}. <Mp3 text={text} autoPlay /> {text}
+            <p className="pb-2">
+              <span> {index + 1}. </span>
+              <Mp3 text={text} secondaryText={secondaryText} secondaryTextCallback={handleShowAnswer} autoPlay /> {text}{" "}
+            </p>
+            {showAnswer && <p>Odpowiedź: {secondaryText} </p>}
           </div>
 
-          <div className="fixed right-0" onClick={() => setIndex((prev) => prev + 1)}>
+          <div
+            className="fixed right-0"
+            onClick={() => {
+              setIndex((prev) => prev + 1);
+              setShowAnswer(false);
+            }}
+          >
             next
           </div>
         </>
