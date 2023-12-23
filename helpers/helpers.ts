@@ -18,14 +18,15 @@ export function textToSlug160(text: string) {
   return text.slice(0, 160);
 }
 
+const rnd = () => Math.random() - 0.5;
+
 export const generateSingleExam = (
   _questions: QuestionSmall[],
   _category: string,
   howManyPngOnFront = 0
 ): QuestionSmall[] => {
-  const questions = _questions.filter((question) => question.categories.includes(_category));
+  const questions = _questions.filter((question) => question.categories.includes(_category)).sort(rnd);
   const questionsCopy = [...questions];
-  const rnd = () => Math.random() - 0.5;
 
   const yesNo_Score1_count4: QuestionSmall[] = []; // 4 questions with score 1 and answer yesNo
   const yesNo_Score2_count6: QuestionSmall[] = []; // 6 questions with score 2 and answer yesNo

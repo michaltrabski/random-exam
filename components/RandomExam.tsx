@@ -41,7 +41,7 @@ const NEXT_QUESTION_DELAY = 999999;
 const NEXT_QUESTION_DELAY_FALLBACK = 20 * 1000; // question will change ewery 20s
 
 const RandomExam = () => {
-  const [questions, setQuestions] = useState<QuestionSmall[]>([]);
+  const [questions32, setQuestions32] = useState<QuestionSmall[]>([]);
   const [showAnswer, setShowAnswer] = useState(false);
 
   useEffect(() => {
@@ -49,7 +49,7 @@ const RandomExam = () => {
 
     const questions32 = generateSingleExam(questionsSmall, "b", 0);
 
-    setQuestions(() => questions32);
+    setQuestions32(() => questions32);
   }, []);
 
   const [index, setIndex] = useState(START_INDEX);
@@ -60,6 +60,8 @@ const RandomExam = () => {
   const imageRef = useRef<HTMLImageElement | null>(null);
   const timerIdRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const masterTimerIdRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const scoreSum = questions32.reduce((acc, curr) => acc + curr.score, 0);
 
   const videoEventCanPlayThrough = useCallback(() => {}, []);
 
@@ -157,7 +159,7 @@ const RandomExam = () => {
   };
 
   const isFileVideo = (m: string) => m.includes(".mp4");
-  const currentQuestion = questions[index];
+  const currentQuestion = questions32[index];
 
   if (isEnded) {
     return <ExamEndedView />;
@@ -216,10 +218,19 @@ const RandomExam = () => {
       )}
       {!isStarted && !isEnded && (
         <>
-          <h1>Random Exam {questions.length} pytań.</h1>
-          <p onClick={startExam}>Start</p>
+          <h1>
+            Losowy egzamin składa się z {questions32.length} pytań. Należy zdobyć minimum 68 punktów na {scoreSum}.
+          </h1>
+          <div className="p-3">
+            <button
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              onClick={startExam}
+            >
+              Rozpocznij egzamin
+            </button>
+          </div>
           <ul>
-            {questions.map((question, i) => {
+            {questions32.map((question, i) => {
               const src = question.media ? `${MEDIA_FOLDER}${question.media}` : "/placeholder_1.png";
 
               return (
@@ -231,7 +242,7 @@ const RandomExam = () => {
                       // eslint-disable-next-line @next/next/no-img-element
                       <img className="w-[50px]" src={src} alt={question.text} />
                     )}
-                    <Mp3 text={question.text} /> {i + 1}. {question.text}
+                    <Mp3 text={question.text} /> {i + 1}. {question.text} {question.score}pkt
                   </div>
                 </li>
               );
