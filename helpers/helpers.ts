@@ -1,4 +1,4 @@
-import { QuestionSmall } from "@/components/RandomExam";
+import { QuestionSmall } from "@/data/types";
 
 export function textToSlug160(text: string) {
   text = text.toLowerCase().trim();

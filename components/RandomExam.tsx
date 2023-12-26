@@ -4,35 +4,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import questionSmallObj from "../data/questions-small.json";
 import ExamEndedView from "./ExamEndedView";
-import { Mp3 } from "./Mp3";
+import { Mp3_deprecated } from "./Mp3_deprecated";
 import { generateSingleExam } from "@/helpers/helpers";
-
-export interface CategoriesObj {
-  categoriesCount: number;
-  categories: string[];
-  categoriesWithCount: { [key: string]: number };
-}
-
-export interface QuestionSmall {
-  slug: string;
-  isActive: boolean;
-
-  id: string;
-  text: string;
-  a: string;
-  b: string;
-  c: string;
-  r: string;
-  media: string;
-  categories: string[];
-  score: number;
-}
-
-export interface QuestionSmallObj {
-  questionsSmallCount: number;
-  categoriesObj: CategoriesObj;
-  questionsSmall: QuestionSmall[];
-}
+import { QuestionSmall, QuestionSmallObj } from "@/data/types";
 
 const MEDIA_FOLDER = `${process.env.NEXT_PUBLIC_MEDIA_LOCATION}size-720/`;
 const START_INDEX = 0;
@@ -40,7 +14,7 @@ const GO_FULL_SCREEN = true;
 const NEXT_QUESTION_DELAY = 999999;
 const NEXT_QUESTION_DELAY_FALLBACK = 20 * 1000; // question will change ewery 20s
 
-const RandomExam = () => {
+const RandomExam1 = () => {
   const [questions32, setQuestions32] = useState<QuestionSmall[]>([]);
   const [showAnswer, setShowAnswer] = useState(false);
 
@@ -196,7 +170,13 @@ const RandomExam = () => {
           <div className="w-4/5 p-1 fixed bottom-0 bg-slate-600 text-white">
             <p className="pb-2">
               <span> {index + 1}. </span>
-              <Mp3 text={text} secondaryText={secondaryText} secondaryTextCallback={handleShowAnswer} autoPlay /> {text}{" "}
+              <Mp3_deprecated
+                text={text}
+                secondaryText={secondaryText}
+                secondaryTextCallback={handleShowAnswer}
+                autoPlay
+              />{" "}
+              {text}{" "}
             </p>
             {showAnswer && (
               <p>
@@ -242,7 +222,7 @@ const RandomExam = () => {
                       // eslint-disable-next-line @next/next/no-img-element
                       <img className="w-[50px]" src={src} alt={question.text} />
                     )}
-                    <Mp3 text={question.text} /> {i + 1}. {question.text} {question.score}pkt
+                    <Mp3_deprecated text={question.text} /> {i + 1}. {question.text} {question.score}pkt
                   </div>
                 </li>
               );
@@ -254,4 +234,4 @@ const RandomExam = () => {
   );
 };
 
-export default RandomExam;
+export default RandomExam1;

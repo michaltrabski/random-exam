@@ -1,9 +1,13 @@
-import RandomExam from "@/components/RandomExam";
+import Link from "next/link";
 
 export default function Home() {
   return (
     <>
-      <RandomExam />
+      <ul>
+        <li>
+          <Link href="/1">Egzamin 1</Link>
+        </li>
+      </ul>
     </>
   );
 }

@@ -13,7 +13,7 @@ interface Mp3Props {
 const MP3_FOLDER = `${process.env.NEXT_PUBLIC_MEDIA_LOCATION}mp3/`;
 const SECONDARY_TEXT_DELAY = 2000;
 
-export const Mp3: FC<Mp3Props> = ({ text, secondaryText, secondaryTextCallback, autoPlay = false }) => {
+export const Mp3_deprecated: FC<Mp3Props> = ({ text, secondaryText, secondaryTextCallback, autoPlay = false }) => {
   const [textToPlay, setTextToPlay] = useState(text);
   const [mp3State, setMp3State] = useState<"loadeddata" | "playing" | "play" | "pause" | "error" | "ended" | "">("");
   const mp3Ref = useRef<HTMLAudioElement | null>(null);
