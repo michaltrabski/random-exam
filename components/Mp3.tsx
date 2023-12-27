@@ -1,5 +1,4 @@
 "use client";
-
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 
 import { textToSlug160 } from "@/helpers/helpers";
@@ -9,19 +8,17 @@ import { PauseIcon } from "./PauseIcon";
 
 interface Mp3Props {
   text: string;
-  secondaryText?: string; // play it after primary text is ended
-  secondaryTextCallback?: () => void;
   autoPlay?: boolean;
+  onEndedCallback?: () => void;
 }
 
+type Mp3State = "loadeddata" | "playing" | "play" | "pause" | "error" | "ended" | "";
 const MP3_FOLDER = `${process.env.NEXT_PUBLIC_MEDIA_LOCATION}mp3/`;
-const SECONDARY_TEXT_DELAY = 2000;
 
-export const Mp3_deprecated: FC<Mp3Props> = ({ text, secondaryText, secondaryTextCallback, autoPlay = false }) => {
-  const [textToPlay, setTextToPlay] = useState(text);
-  const [mp3State, setMp3State] = useState<"loadeddata" | "playing" | "play" | "pause" | "error" | "ended" | "">("");
+export const Mp3: FC<Mp3Props> = ({ text, autoPlay = false, onEndedCallback }) => {
+  const [mp3State, setMp3State] = useState<Mp3State>("");
+
   const mp3Ref = useRef<HTMLAudioElement | null>(null);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleLoadedData = () => setMp3State(() => "loadeddata");
   const handlePlaying = () => setMp3State(() => "playing");
@@ -30,25 +27,12 @@ export const Mp3_deprecated: FC<Mp3Props> = ({ text, secondaryText, secondaryTex
   const handleError = () => setMp3State(() => "error");
 
   const handleEnded = useCallback(() => {
-    if (secondaryText) {
-      timeoutRef.current = setTimeout(() => {
-        setTextToPlay(() => secondaryText);
-        secondaryTextCallback && secondaryTextCallback();
-      }, SECONDARY_TEXT_DELAY);
-    }
     setMp3State(() => "ended");
-  }, [secondaryText, secondaryTextCallback]);
 
-  useEffect(() => {
-    console.log(text, "\n", secondaryText);
-    return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    };
-  }, [text, secondaryText]);
-
-  useEffect(() => {
-    setTextToPlay(() => text);
-  }, [text]);
+    if (onEndedCallback) {
+      onEndedCallback();
+    }
+  }, [onEndedCallback]);
 
   useEffect(() => {
     const mp3 = mp3Ref.current;
@@ -88,7 +72,7 @@ export const Mp3_deprecated: FC<Mp3Props> = ({ text, secondaryText, secondaryTex
     await mp3.play();
   };
 
-  const src = `${MP3_FOLDER}${textToSlug160(textToPlay)}.mp3`;
+  const src = `${MP3_FOLDER}${textToSlug160(text)}.mp3`;
 
   return (
     <>

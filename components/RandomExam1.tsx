@@ -95,12 +95,10 @@ const RandomExam1 = () => {
   }, [index, isStarted, endExam]);
 
   const videoEventEnded = useCallback(() => {
-    console.log("video ended");
     nextQuestion();
   }, [nextQuestion]);
 
   const imageEvent = useCallback(() => {
-    console.log("image load");
     nextQuestion();
   }, [nextQuestion]);
 

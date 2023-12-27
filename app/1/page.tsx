@@ -1,4 +1,4 @@
-import RandomExam1 from "@/components/RandomExam";
+import RandomExam1 from "@/components/RandomExam1";
 
 export default function Home() {
   return (
