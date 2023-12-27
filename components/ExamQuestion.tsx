@@ -56,7 +56,7 @@ export const SingleQuestion: FC<SingleQuestionProps> = ({ question, index, nextQ
 
   return (
     <>
-      <div className="fixed bottom-10 w-4/5">
+      <div className="fixed bottom-10 w-10/12">
         {src.endsWith(".mp4") ? (
           <video ref={videoRef} className="w-full" src={src} autoPlay />
         ) : (
@@ -75,7 +75,7 @@ export const SingleQuestion: FC<SingleQuestionProps> = ({ question, index, nextQ
         <span>Odwiedź naszą stronę!</span>
       </div>
 
-      <div className="w-4/5 p-1 fixed bottom-0 bg-slate-600 text-white">
+      <div className="w-10/12 p-1 fixed bottom-0 bg-slate-600 text-white">
         <p className="pb-2">
           <span> {index + 1}. </span>
           <Mp3
