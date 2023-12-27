@@ -100,7 +100,7 @@ export const SingleQuestion: FC<SingleQuestionProps> = ({ question, index, nextQ
         next
       </div>
       <div className="fixed right-0 bottom-0">
-        <video className="w-[50px]" src="/placeholder.mp4" autoPlay />
+        <video className="w-[50px]" src="/placeholder.mp4" autoPlay loop controls />
       </div>
     </>
   );
