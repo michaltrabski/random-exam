@@ -99,6 +99,9 @@ export const SingleQuestion: FC<SingleQuestionProps> = ({ question, index, nextQ
       <div className="fixed right-0" onClick={nextQuestion}>
         next
       </div>
+      <div className="fixed right-0 bottom-0">
+        <video className="w-[50px]" src="/placeholder.mp4" autoPlay />
+      </div>
     </>
   );
 };
