@@ -10,6 +10,9 @@ export default function Home() {
         <li>
           <Link href="/2">Egzamin 2</Link>
         </li>
+        <li>
+          <Link href="/3">Egzamin 3</Link>
+        </li>
       </ul>
     </>
   );
