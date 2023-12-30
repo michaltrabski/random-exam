@@ -9,11 +9,11 @@ import questionSmallObj from "../../data/questions-small.json";
 import ExamEndedView from "../../components/ExamEndedView";
 import { Mp3 } from "../../components/Mp3";
 import { SingleQuestion3 } from "./SingleQuestion3";
+import { MEDIA_FOLDER } from "@/constants/constants";
 
-const MEDIA_FOLDER = `${process.env.NEXT_PUBLIC_MEDIA_LOCATION}size-720/`;
 const START_INDEX = 0;
 const GO_FULL_SCREEN = true;
-const NEXT_QUESTION_DELAY_FALLBACK = 20 * 1000; // question will change ewery 20s
+const NEXT_QUESTION_DELAY = 25 * 1000; // question will change ewery 20s
 
 const RandomExam3 = () => {
   const [questions32, setQuestions32] = useState<QuestionSmall[]>([]);
@@ -30,7 +30,7 @@ const RandomExam3 = () => {
   const [isStarted, setIsStarted] = useState(() => false);
   const [isEnded, setIsEnded] = useState(false);
 
-  const timerId = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const nextQuestionTimerIdRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const scoreSum = questions32.reduce((acc, curr) => acc + curr.score, 0);
 
@@ -62,18 +62,18 @@ const RandomExam3 = () => {
       return;
     }
 
-    timerId.current = setTimeout(() => {
+    nextQuestionTimerIdRef.current = setTimeout(() => {
       if (index > 31) {
-        if (timerId.current) clearTimeout(timerId.current);
+        if (nextQuestionTimerIdRef.current) clearTimeout(nextQuestionTimerIdRef.current);
 
         return;
       }
 
       setIndex((prevIndex) => prevIndex + 1);
-    }, NEXT_QUESTION_DELAY_FALLBACK);
+    }, NEXT_QUESTION_DELAY);
 
     return () => {
-      if (timerId.current) clearTimeout(timerId.current);
+      if (nextQuestionTimerIdRef.current) clearTimeout(nextQuestionTimerIdRef.current);
     };
   }, [index, isStarted, endExam]);
 

@@ -3,7 +3,8 @@
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 
 import { QuestionSmall } from "@/data/types";
-import { Mp3 } from "@/components/Mp3";
+import { Mp3 } from "./Mp3";
+import { MEDIA_FOLDER } from "@/constants/constants";
 
 interface SingleQuestion3Props {
   question: QuestionSmall;
@@ -11,7 +12,7 @@ interface SingleQuestion3Props {
   nextQuestion: () => void;
 }
 
-const MEDIA_FOLDER = `${process.env.NEXT_PUBLIC_MEDIA_LOCATION}size-720/`;
+const SHOW_ANSWER_DELAY = 3 * 1000; // answer will show after 1s
 
 export const SingleQuestion3: FC<SingleQuestion3Props> = ({ question, index, nextQuestion }) => {
   const [showAnswer, setShowAnswer] = useState(false);
@@ -21,6 +22,7 @@ export const SingleQuestion3: FC<SingleQuestion3Props> = ({ question, index, nex
   }, [index]);
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const showAnswerTimerIdRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const { text, a, b, c, r, media } = question;
 
@@ -33,16 +35,22 @@ export const SingleQuestion3: FC<SingleQuestion3Props> = ({ question, index, nex
   if (r === "b") rightAnswerText = b;
   if (r === "c") rightAnswerText = c;
 
+  const handleShowAnswer = () => {
+    showAnswerTimerIdRef.current = setTimeout(() => {
+      setShowAnswer(true);
+    }, SHOW_ANSWER_DELAY);
+  };
+
   const mp3Ended = () => {
     const isVideo = src.endsWith(".mp4");
 
     if (!isVideo) {
-      setShowAnswer(true);
+      handleShowAnswer();
     }
   };
 
   const videoEnded = useCallback(() => {
-    setShowAnswer(true);
+    handleShowAnswer();
   }, [index]);
 
   useEffect(() => {
@@ -52,6 +60,7 @@ export const SingleQuestion3: FC<SingleQuestion3Props> = ({ question, index, nex
 
     return () => {
       cachedVideoRef?.removeEventListener("ended", videoEnded);
+      showAnswerTimerIdRef.current && clearTimeout(showAnswerTimerIdRef.current);
     };
   }, [index, videoEnded]);
 
@@ -66,25 +75,25 @@ export const SingleQuestion3: FC<SingleQuestion3Props> = ({ question, index, nex
         )}
       </div>
 
-      <div className="p-2 fixed top-0 bg-slate-800 opacity-80 text-white">
+      <div className="p-3 text-3xl fixed top-0 bg-slate-800 opacity-80 text-white ">
         <strong>poznaj</strong>
         <strong className="text-red-600">-testy</strong>
         <strong>.pl</strong>
       </div>
 
-      <div onClick={nextQuestion} className="p-2 fixed top-0 right-0 bg-slate-800 opacity-80 text-yellow-300">
+      <div onClick={nextQuestion} className="p-3 text-3xl  fixed top-0 right-0 bg-slate-800 opacity-80 text-yellow-300">
         <span>Odwiedź naszą stronę!</span>
       </div>
 
-      <div className="text-3xl w-full marker:p-1 fixed bottom-0 bg-slate-600 text-white">
+      <div className="p-2 text-3xl w-full marker:p-1 fixed bottom-0 bg-slate-600 text-white">
         <p className="pb-2">
           <span> {index + 1}. </span>
-          <Mp3 text={text} autoPlay onEndedCallback={mp3Ended} />
+          <Mp3 text={text} onEndedCallback={mp3Ended} delay={1000} />
           <span> {text} </span>
         </p>
         {showAnswer && (
-          <p>
-            <Mp3 text={rightAnswerText} autoPlay />
+          <p className="pb-2">
+            <Mp3 text={rightAnswerText} delay={1} />
             <span> Odpowiedź {a ? `${r.toUpperCase()}.` : ""} </span>
             <span> {rightAnswerText} </span>
           </p>
