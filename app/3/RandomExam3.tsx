@@ -7,9 +7,10 @@ import { QuestionSmall, QuestionSmallObj } from "@/data/types";
 
 import questionSmallObj from "../../data/questions-small.json";
 import ExamEndedView from "../../components/ExamEndedView";
-import { Mp3 } from "../../components/Mp3";
+
 import { SingleQuestion3 } from "./SingleQuestion3";
 import { MEDIA_FOLDER } from "@/constants/constants";
+import { Mp3 } from "./Mp3";
 
 const START_INDEX = 0;
 const GO_FULL_SCREEN = true;
@@ -96,10 +97,24 @@ const RandomExam3 = () => {
     return <div>Ładowanie pytań</div>;
   }
 
+  const { a, b, c, r } = currentQuestion;
+
+  let rightAnswerText = "";
+  if (r === "t") rightAnswerText = "tak";
+  if (r === "n") rightAnswerText = "nie";
+  if (r === "a") rightAnswerText = a;
+  if (r === "b") rightAnswerText = b;
+  if (r === "c") rightAnswerText = c;
+
   return (
     <div>
       {isStarted && !isEnded && (
-        <SingleQuestion3 question={currentQuestion} index={index} nextQuestion={nextQuestion} />
+        <SingleQuestion3
+          question={currentQuestion}
+          index={index}
+          nextQuestion={nextQuestion}
+          rightAnswerText={rightAnswerText}
+        />
       )}
       {!isStarted && !isEnded && (
         <>
@@ -118,19 +133,37 @@ const RandomExam3 = () => {
             {questions32.map((question, i) => {
               const _src = question.media ? `${MEDIA_FOLDER}${question.media}` : "/placeholder_1.png";
 
+              const { a, b, c, r } = question;
+
+              let _rightAnswerText = "";
+              if (r === "t") _rightAnswerText = "tak";
+              if (r === "n") _rightAnswerText = "nie";
+              if (r === "a") _rightAnswerText = a;
+              if (r === "b") _rightAnswerText = b;
+              if (r === "c") _rightAnswerText = c;
+
               return (
                 <li key={question.id}>
                   <div className="flex w-full pb-10">
-                    {_src.endsWith(".mp4") ? (
-                      <video className="w-[150px]" src={_src} controls />
-                    ) : (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img className="w-[150px]" src={_src} alt={question.text} />
-                    )}
-                    <p>
-                      <Mp3 text={question.text} />
-                    </p>
-                    {i + 1}. {question.text} {question.score}pkt
+                    <div>
+                      {_src.endsWith(".mp4") ? (
+                        <video className="w-[150px]" src={_src} controls />
+                      ) : (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img className="w-[150px]" src={_src} alt={question.text} />
+                      )}
+                    </div>
+                    <div>
+                      <p>
+                        <Mp3 text={question.text} />
+                        {i + 1}. {question.text} {question.score}pkt
+                      </p>
+                      <p className="pb-2">
+                        <Mp3 text={_rightAnswerText} />
+                        <span> Odpowiedź {a ? `${r.toUpperCase()}.` : ""} </span>
+                        <span> {_rightAnswerText} </span>
+                      </p>
+                    </div>
                   </div>
                 </li>
               );

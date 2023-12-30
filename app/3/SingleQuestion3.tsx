@@ -10,11 +10,12 @@ interface SingleQuestion3Props {
   question: QuestionSmall;
   index: number;
   nextQuestion: () => void;
+  rightAnswerText: string;
 }
 
-const SHOW_ANSWER_DELAY = 3 * 1000; // answer will show after 1s
+const SHOW_ANSWER_DELAY = 3 * 1000; // answer will show after
 
-export const SingleQuestion3: FC<SingleQuestion3Props> = ({ question, index, nextQuestion }) => {
+export const SingleQuestion3: FC<SingleQuestion3Props> = ({ question, index, nextQuestion, rightAnswerText }) => {
   const [showAnswer, setShowAnswer] = useState(false);
 
   useEffect(() => {
@@ -24,16 +25,9 @@ export const SingleQuestion3: FC<SingleQuestion3Props> = ({ question, index, nex
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const showAnswerTimerIdRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const { text, a, b, c, r, media } = question;
+  const { text, a, r, media } = question;
 
   const src = media ? `${MEDIA_FOLDER}${media}` : "/placeholder_1.png";
-
-  let rightAnswerText = "";
-  if (r === "t") rightAnswerText = "tak";
-  if (r === "n") rightAnswerText = "nie";
-  if (r === "a") rightAnswerText = a;
-  if (r === "b") rightAnswerText = b;
-  if (r === "c") rightAnswerText = c;
 
   const handleShowAnswer = () => {
     showAnswerTimerIdRef.current = setTimeout(() => {

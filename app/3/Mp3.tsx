@@ -23,6 +23,8 @@ export const Mp3: FC<Mp3Props> = ({ text, autoPlay = false, onEndedCallback, del
     setMp3State(() => "loadeddata");
     console.log("loadeddata", delay);
 
+    if (!autoPlay) return;
+
     timerId.current = setTimeout(() => {
       handleMp3Play();
     }, delay);
