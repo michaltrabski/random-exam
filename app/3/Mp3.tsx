@@ -10,10 +10,10 @@ interface Mp3Props {
   text: string;
   autoPlay?: boolean;
   onEndedCallback?: () => void;
-  delay?: number;
+  autoPlayWithdelay?: number;
 }
 
-export const Mp3: FC<Mp3Props> = ({ text, autoPlay = false, onEndedCallback, delay = 0 }) => {
+export const Mp3: FC<Mp3Props> = ({ text, autoPlay = false, onEndedCallback, autoPlayWithdelay }) => {
   const [mp3State, setMp3State] = useState<Mp3State>("");
 
   const mp3Ref = useRef<HTMLAudioElement | null>(null);
@@ -21,13 +21,13 @@ export const Mp3: FC<Mp3Props> = ({ text, autoPlay = false, onEndedCallback, del
 
   const handleLoadedData = () => {
     setMp3State(() => "loadeddata");
-    console.log("loadeddata", delay);
+    console.log("video loadeddata - play mp3 with delay=", autoPlayWithdelay);
 
-    if (!autoPlay) return;
+    if (autoPlayWithdelay === undefined) return;
 
     timerId.current = setTimeout(() => {
       handleMp3Play();
-    }, delay);
+    }, autoPlayWithdelay);
   };
 
   const handlePlaying = () => setMp3State(() => "playing");
