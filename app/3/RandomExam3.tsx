@@ -14,7 +14,7 @@ import { Mp3 } from "./Mp3";
 
 const START_INDEX = 0;
 const GO_FULL_SCREEN = true;
-const NEXT_QUESTION_DELAY = 25 * 1000; // question will change every ...
+const NEXT_QUESTION_DELAY = 30 * 1000; // question will change every ...
 
 const RandomExam3 = () => {
   const [questions32, setQuestions32] = useState<QuestionSmall[]>([]);
@@ -46,7 +46,7 @@ const RandomExam3 = () => {
       setIndex(START_INDEX);
       setIsStarted(true);
       setIsEnded(false);
-    }, 35 * 1000);
+    }, 60 * 1000);
   }, []);
 
   const nextQuestion = useCallback(() => {
@@ -111,9 +111,9 @@ const RandomExam3 = () => {
   let rightAnswerText = "";
   if (r === "t") rightAnswerText = "tak";
   if (r === "n") rightAnswerText = "nie";
-  if (r === "a") rightAnswerText = a;
-  if (r === "b") rightAnswerText = b;
-  if (r === "c") rightAnswerText = c;
+  if (r === "a") rightAnswerText = `Odpowiedź A! ${a}`;
+  if (r === "b") rightAnswerText = `Odpowiedź B! ${b}`;
+  if (r === "c") rightAnswerText = `Odpowiedź C! ${c}`;
 
   return (
     <div>
@@ -144,14 +144,14 @@ const RandomExam3 = () => {
             let _rightAnswerText = "";
             if (r === "t") _rightAnswerText = "tak";
             if (r === "n") _rightAnswerText = "nie";
-            if (r === "a") _rightAnswerText = a;
-            if (r === "b") _rightAnswerText = b;
-            if (r === "c") _rightAnswerText = c;
+            if (r === "a") _rightAnswerText = `Odpowiedź A! ${a}`;
+            if (r === "b") _rightAnswerText = `Odpowiedź B! ${b}`;
+            if (r === "c") _rightAnswerText = `Odpowiedź C! ${c}`;
 
             return (
               <li key={question.id}>
                 <div className="flex w-full pb-10">
-                  <div>
+                  <div className="shrink-0 pr-2">
                     {_src.endsWith(".mp4") ? (
                       <video className="w-[150px]" src={_src} controls />
                     ) : (
@@ -166,7 +166,6 @@ const RandomExam3 = () => {
                     </p>
                     <p className="pb-2">
                       <Mp3 text={_rightAnswerText} />
-                      <span> Odpowiedź {a ? `${r.toUpperCase()}.` : ""} </span>
                       <span> {_rightAnswerText} </span>
                     </p>
                   </div>

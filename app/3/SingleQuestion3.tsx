@@ -13,7 +13,7 @@ interface SingleQuestion3Props {
   rightAnswerText: string;
 }
 
-const SHOW_ANSWER_DELAY = 3 * 1000; // answer will show after
+const SHOW_ANSWER_DELAY = 2.5 * 1000; // answer will show after
 
 export const SingleQuestion3: FC<SingleQuestion3Props> = ({ question, index, nextQuestion, rightAnswerText }) => {
   const [showAnswer, setShowAnswer] = useState(false);
@@ -87,8 +87,6 @@ export const SingleQuestion3: FC<SingleQuestion3Props> = ({ question, index, nex
         </p>
         {showAnswer && (
           <p className="pb-2">
-            <Mp3 text={rightAnswerText} autoPlayWithdelay={0} />
-            <span> Odpowiedź {a ? `${r.toUpperCase()}.` : ""} </span>
             <span> {rightAnswerText} </span>
           </p>
         )}
