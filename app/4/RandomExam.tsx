@@ -13,7 +13,7 @@ import QuestionsList from "./QuestionsList";
 
 const START_INDEX = 0;
 const GO_FULL_SCREEN = true;
-const NEXT_QUESTION_DELAY_FALLBACK = 25 * 1000;
+const NEXT_QUESTION_DELAY_FALLBACK = 30 * 1000;
 const NEXT_EXAM_DELAY = NEXT_QUESTION_DELAY_FALLBACK * 2 * 1000;
 
 const RandomExam = () => {

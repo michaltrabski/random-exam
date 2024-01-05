@@ -13,7 +13,7 @@ interface SingleQuestionProps {
 }
 
 const SHOW_ANSWER_DELAY = 2.5 * 1000; // answer will show after
-// const NEXT_QUESTION_DELAY = 2 * 1000; // dont use it because I need to create timestamps for each question
+const NEXT_QUESTION_DELAY = 2222; // 11 * 1000; // next question will show after mp3 with answer ends playing
 
 export const SingleQuestion: FC<SingleQuestionProps> = ({ question, index, nextQuestion }) => {
   const [showAnswer, setShowAnswer] = useState(false);
@@ -29,7 +29,7 @@ export const SingleQuestion: FC<SingleQuestionProps> = ({ question, index, nextQ
 
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const showAnswerTimerIdRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  // const nextQuestionTimerIdRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const nextQuestionTimerIdRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const { text, media, a, b, c, r } = question;
 
@@ -42,9 +42,9 @@ export const SingleQuestion: FC<SingleQuestionProps> = ({ question, index, nextQ
   };
 
   const hendleNextQuestionWithDelay = () => {
-    // nextQuestionTimerIdRef.current = setTimeout(() => {
-    //   nextQuestion();
-    // }, NEXT_QUESTION_DELAY);
+    nextQuestionTimerIdRef.current = setTimeout(() => {
+      nextQuestion();
+    }, NEXT_QUESTION_DELAY);
   };
 
   const mp3Ended = () => {
@@ -77,7 +77,7 @@ export const SingleQuestion: FC<SingleQuestionProps> = ({ question, index, nextQ
     return () => {
       cachedVideoRef?.removeEventListener("ended", videoEnded);
       showAnswerTimerIdRef.current && clearTimeout(showAnswerTimerIdRef.current);
-      // nextQuestionTimerIdRef.current && clearTimeout(nextQuestionTimerIdRef.current);
+      nextQuestionTimerIdRef.current && clearTimeout(nextQuestionTimerIdRef.current);
     };
   }, [index, videoEnded]);
 
@@ -90,7 +90,7 @@ export const SingleQuestion: FC<SingleQuestionProps> = ({ question, index, nextQ
 
   return (
     <>
-      <div className="fixed bottom-10 w-full">
+      <div className="fixed bottom-16 w-full">
         {src.endsWith(".mp4") ? (
           <video ref={videoRef} className="w-full" src={src} autoPlay />
         ) : (
@@ -109,18 +109,54 @@ export const SingleQuestion: FC<SingleQuestionProps> = ({ question, index, nextQ
         <span>Odwiedź naszą stronę!</span>
       </div>
 
-      <div className="p-2 text-3xl w-full marker:p-1 fixed bottom-0 bg-slate-600 text-white">
+      <div className="p-3 text-4xl w-full marker:p-1 fixed bottom-0 bg-slate-600 text-white">
         <p className="pb-2">
           <span> {index + 1}. </span>
           <Mp3 text={text} onEndedCallback={mp3Ended} autoPlayWithdelay={1000} />
           <span> {text} </span>
         </p>
         {showAnswer && (
-          <p className="pb-2">
+          <p className="pb-2 hidden">
             <Mp3 text={rightAnswerText} onEndedCallback={hendleNextQuestionWithDelay} autoPlayWithdelay={0} />
             <span> {rightAnswerText} </span>
           </p>
         )}
+
+        <div className="flex justify-center">
+          {index < 20 && (
+            <div className="flex gap-3">
+              <button
+                className={`${
+                  showAnswer && r === "t" ? "bg-green-700" : "bg-slate-500"
+                } text-white font-bold py-2 px-4 rounded`}
+              >
+                Tak
+              </button>
+              <button
+                className={`${
+                  showAnswer && r === "n" ? "bg-green-700" : "bg-slate-500"
+                } text-white font-bold py-2 px-4 rounded`}
+              >
+                Nie
+              </button>
+            </div>
+          )}
+
+          {index >= 20 && (
+            <div className="flex gap-3 flex-col w-full ">
+              {["a", "b", "c"].map((answer) => (
+                <button
+                  className={`${
+                    showAnswer && r === answer ? "bg-green-700" : "bg-slate-500"
+                  } text-white font-bold py-2 px-4 rounded text-start`}
+                >
+                  <span>{answer.toUpperCase()}) </span>
+                  <span> {question[answer as keyof QuestionSmall]} </span>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </>
   );
