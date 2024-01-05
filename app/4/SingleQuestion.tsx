@@ -146,6 +146,7 @@ export const SingleQuestion: FC<SingleQuestionProps> = ({ question, index, nextQ
             <div className="flex gap-3 flex-col w-full ">
               {["a", "b", "c"].map((answer) => (
                 <button
+                  key={answer}
                   className={`${
                     showAnswer && r === answer ? "bg-green-700" : "bg-slate-500"
                   } text-white font-bold py-2 px-4 rounded text-start`}
