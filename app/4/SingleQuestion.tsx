@@ -13,7 +13,7 @@ interface SingleQuestionProps {
 }
 
 const SHOW_ANSWER_DELAY = 2.5 * 1000; // answer will show after
-const NEXT_QUESTION_DELAY = 2222; // 11 * 1000; // next question will show after mp3 with answer ends playing
+const NEXT_QUESTION_DELAY = 11 * 1000; // next question will show after mp3 with answer ends playing
 
 export const SingleQuestion: FC<SingleQuestionProps> = ({ question, index, nextQuestion }) => {
   const [showAnswer, setShowAnswer] = useState(false);
