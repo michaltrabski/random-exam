@@ -63,7 +63,7 @@ const RandomExam = () => {
       console.log("endExam nextExamTimerIdRef");
       setIsStarted(true);
     }, NEXT_EXAM_DELAY); // this starts new exam
-  }, []);
+  }, [generate]);
 
   const nextQuestion = useCallback(() => {
     if (!isStarted) {
@@ -83,20 +83,14 @@ const RandomExam = () => {
       return;
     }
 
-    if (index > 31) {
-      endExam();
-      return;
-    }
-
     nextQuestionTimerIdRef.current = setTimeout(() => {
-      if (index > 31) {
-        if (nextQuestionTimerIdRef.current) clearTimeout(nextQuestionTimerIdRef.current);
-
-        return;
-      }
-
       setIndex((prevIndex) => prevIndex + 1);
     }, NEXT_QUESTION_DELAY_FALLBACK);
+
+    if (index > 31) {
+      endExam();
+      if (nextQuestionTimerIdRef.current) clearTimeout(nextQuestionTimerIdRef.current);
+    }
 
     return () => {
       if (nextQuestionTimerIdRef.current) clearTimeout(nextQuestionTimerIdRef.current);
