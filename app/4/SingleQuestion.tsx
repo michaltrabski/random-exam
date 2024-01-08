@@ -5,15 +5,13 @@ import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { QuestionSmall } from "@/data/types";
 import { Mp3 } from "./Mp3";
 import { MEDIA_FOLDER } from "@/constants/constants";
+import { NEXT_QUESTION_DELAY, SHOW_ANSWER_DELAY } from "./RandomExam";
 
 interface SingleQuestionProps {
   question: QuestionSmall;
   index: number;
   nextQuestion: () => void;
 }
-
-const SHOW_ANSWER_DELAY = 2.5 * 1000; // answer will show after
-const NEXT_QUESTION_DELAY = 11 * 1000; // next question will show after mp3 with answer ends playing
 
 export const SingleQuestion: FC<SingleQuestionProps> = ({ question, index, nextQuestion }) => {
   const [showAnswer, setShowAnswer] = useState(false);
@@ -82,8 +80,8 @@ export const SingleQuestion: FC<SingleQuestionProps> = ({ question, index, nextQ
   }, [index, videoEnded]);
 
   let rightAnswerText = "";
-  if (r === "t") rightAnswerText = "tak";
-  if (r === "n") rightAnswerText = "nie";
+  if (r === "t") rightAnswerText = "Odpowiedź tak!";
+  if (r === "n") rightAnswerText = "Odpowiedź nie!";
   if (r === "a") rightAnswerText = `Odpowiedź A! ${a}`;
   if (r === "b") rightAnswerText = `Odpowiedź B! ${b}`;
   if (r === "c") rightAnswerText = `Odpowiedź C! ${c}`;

@@ -6,15 +6,23 @@ import { generateSingleExam } from "@/helpers/helpers";
 import { QuestionSmall, QuestionSmallObj } from "@/data/types";
 
 import questionSmallObj from "../../data/questions-small.json";
-import ExamEndedView from "../../components/ExamEndedView";
-
 import { SingleQuestion } from "./SingleQuestion";
 import QuestionsList from "./QuestionsList";
+import ExamEndedView from "./ExamEndedView";
 
 const START_INDEX = 0;
 const GO_FULL_SCREEN = true;
-const NEXT_QUESTION_DELAY_FALLBACK = 30 * 1000;
+const NEXT_QUESTION_DELAY_FALLBACK = 45 * 1000;
 const NEXT_EXAM_DELAY = NEXT_QUESTION_DELAY_FALLBACK * 2 * 1000;
+export const SHOW_ANSWER_DELAY = 2 * 1000;
+export const NEXT_QUESTION_DELAY = 13 * 1000;
+
+// const START_INDEX = 31;
+// const GO_FULL_SCREEN = false;
+// const NEXT_QUESTION_DELAY_FALLBACK = 30 * 1000;
+// const NEXT_EXAM_DELAY = 21 * 1000;
+// export const SHOW_ANSWER_DELAY = 1 * 1000;
+// export const NEXT_QUESTION_DELAY = 1 * 1000;
 
 const RandomExam = () => {
   const [questions32, setQuestions32] = useState<QuestionSmall[]>([]);
@@ -35,20 +43,24 @@ const RandomExam = () => {
 
   const nextQuestionTimerIdRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const nextExamTimerIdRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const prepareExamTimerIdRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const scoreSum = questions32.reduce((acc, curr) => acc + curr.score, 0);
 
   const endExam = useCallback(() => {
+    console.log("endExam");
     setIsStarted(false);
     setIsEnded(true);
 
-    setTimeout(() => {
+    prepareExamTimerIdRef.current = setTimeout(() => {
+      console.log("endExam setTimeout");
       generate();
       setIndex(START_INDEX);
       setIsEnded(false);
     }, NEXT_EXAM_DELAY / 3);
 
     nextExamTimerIdRef.current = setTimeout(() => {
+      console.log("endExam nextExamTimerIdRef");
       setIsStarted(true);
     }, NEXT_EXAM_DELAY); // this starts new exam
   }, []);
@@ -89,6 +101,7 @@ const RandomExam = () => {
     return () => {
       if (nextQuestionTimerIdRef.current) clearTimeout(nextQuestionTimerIdRef.current);
       if (nextExamTimerIdRef.current) clearTimeout(nextExamTimerIdRef.current);
+      if (prepareExamTimerIdRef.current) clearTimeout(prepareExamTimerIdRef.current);
     };
   }, [index, isStarted, endExam]);
 

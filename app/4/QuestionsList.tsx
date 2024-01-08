@@ -17,8 +17,8 @@ const QuestionsList = ({ questions32 }: QuestionsListProps) => {
         const { a, b, c, r } = question;
 
         let rightAnswerText = "";
-        if (r === "t") rightAnswerText = "tak";
-        if (r === "n") rightAnswerText = "nie";
+        if (r === "t") rightAnswerText = "Odpowiedź tak!";
+        if (r === "n") rightAnswerText = "Odpowiedź nie!";
         if (r === "a") rightAnswerText = `Odpowiedź A! ${a}`;
         if (r === "b") rightAnswerText = `Odpowiedź B! ${b}`;
         if (r === "c") rightAnswerText = `Odpowiedź C! ${c}`;
