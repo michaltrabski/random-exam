@@ -10,19 +10,19 @@ import { SingleQuestion } from "./SingleQuestion";
 import QuestionsList from "./QuestionsList";
 import ExamEndedView from "./ExamEndedView";
 
-const START_INDEX = 0;
-const GO_FULL_SCREEN = true;
-const NEXT_QUESTION_DELAY_FALLBACK = 45 * 1000;
-const NEXT_EXAM_DELAY = NEXT_QUESTION_DELAY_FALLBACK * 3 + 1;
-export const SHOW_ANSWER_DELAY = 2 * 1000;
-export const NEXT_QUESTION_DELAY = 13 * 1000;
+// const START_INDEX = 0;
+// const GO_FULL_SCREEN = true;
+// const NEXT_QUESTION_DELAY_FALLBACK = 45 * 1000;
+// const NEXT_EXAM_DELAY = NEXT_QUESTION_DELAY_FALLBACK * 3 + 1;
+// export const SHOW_ANSWER_DELAY = 2 * 1000;
+// export const NEXT_QUESTION_DELAY = 13 * 1000;
 
-// const START_INDEX = 30;
-// const GO_FULL_SCREEN = false;
-// const NEXT_QUESTION_DELAY_FALLBACK = 5 * 1000;
-// const NEXT_EXAM_DELAY = NEXT_QUESTION_DELAY_FALLBACK * 2;
-// export const SHOW_ANSWER_DELAY = 1 * 1000;
-// export const NEXT_QUESTION_DELAY = 1 * 1000;
+const START_INDEX = 30;
+const GO_FULL_SCREEN = false;
+const NEXT_QUESTION_DELAY_FALLBACK = 5 * 1000;
+const NEXT_EXAM_DELAY = NEXT_QUESTION_DELAY_FALLBACK * 2;
+export const SHOW_ANSWER_DELAY = 1 * 1000;
+export const NEXT_QUESTION_DELAY = 1 * 1000;
 
 const RandomExam = () => {
   const [questions32, setQuestions32] = useState<QuestionSmall[]>([]);

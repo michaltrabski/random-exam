@@ -60,14 +60,16 @@ export const SingleQuestion: FC<SingleQuestionProps> = ({ question, index, nextQ
   };
 
   const videoEnded = useCallback(() => {
+    console.log({ index });
     isVideoEndedRef.current = true;
 
     if (isMp3EndedRef.current) {
       handleShowAnswer();
     }
-  }, []); // index michal
+  }, [index]);
 
   useEffect(() => {
+    console.log({ index });
     const cachedVideoRef = videoRef.current;
 
     cachedVideoRef?.addEventListener("ended", videoEnded);
@@ -77,7 +79,7 @@ export const SingleQuestion: FC<SingleQuestionProps> = ({ question, index, nextQ
       showAnswerTimerIdRef.current && clearTimeout(showAnswerTimerIdRef.current);
       nextQuestionTimerIdRef.current && clearTimeout(nextQuestionTimerIdRef.current);
     };
-  }, [videoEnded]); // index michal
+  }, [index, videoEnded]);
 
   let rightAnswerText = "";
   if (r === "t") rightAnswerText = "Odpowiedź tak!";
