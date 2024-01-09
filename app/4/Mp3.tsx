@@ -10,10 +10,11 @@ interface Mp3Props {
   text: string;
   autoPlay?: boolean;
   onEndedCallback?: () => void;
+  onErrorCallback?: () => void;
   autoPlayWithdelay?: number;
 }
 
-export const Mp3: FC<Mp3Props> = ({ text, autoPlay = false, onEndedCallback, autoPlayWithdelay }) => {
+export const Mp3: FC<Mp3Props> = ({ text, autoPlay = false, onEndedCallback, onErrorCallback, autoPlayWithdelay }) => {
   const [mp3State, setMp3State] = useState<Mp3State>("");
 
   const mp3Ref = useRef<HTMLAudioElement | null>(null);
@@ -46,7 +47,13 @@ export const Mp3: FC<Mp3Props> = ({ text, autoPlay = false, onEndedCallback, aut
   const handlePlaying = () => setMp3State(() => "playing");
   const handlePlay = () => setMp3State(() => "play");
   const handlePause = () => setMp3State(() => "pause");
-  const handleError = () => setMp3State(() => "error");
+  const handleError = useCallback(() => {
+    setMp3State(() => "error");
+
+    if (onErrorCallback) {
+      onErrorCallback();
+    }
+  }, [onErrorCallback]);
 
   const handleEnded = useCallback(() => {
     setMp3State(() => "ended");
@@ -79,7 +86,7 @@ export const Mp3: FC<Mp3Props> = ({ text, autoPlay = false, onEndedCallback, aut
       }
       if (timerId.current) clearTimeout(timerId.current);
     };
-  }, [mp3Ref, handleEnded, handleLoadedData]);
+  }, [mp3Ref, handleEnded, handleLoadedData, handleError]);
 
   const src = `${MP3_FOLDER}${textToSlug160(text)}.mp3`;
 

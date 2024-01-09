@@ -112,7 +112,12 @@ export const SingleQuestion: FC<SingleQuestionProps> = ({ question, index, nextQ
       <div className="p-3 text-4xl w-full marker:p-1 fixed bottom-0 bg-slate-600 text-white">
         <p className="pb-2">
           <span> {index + 1}. </span>
-          <Mp3 text={text} onEndedCallback={mp3Ended} autoPlayWithdelay={1000} />
+          <Mp3
+            text={text}
+            onEndedCallback={mp3Ended}
+            autoPlayWithdelay={1000}
+            onErrorCallback={hendleNextQuestionWithDelay}
+          />
           <span> {text} </span>
         </p>
         {showAnswer && (
