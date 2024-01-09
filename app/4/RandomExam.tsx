@@ -13,14 +13,14 @@ import ExamEndedView from "./ExamEndedView";
 const START_INDEX = 0;
 const GO_FULL_SCREEN = true;
 const NEXT_QUESTION_DELAY_FALLBACK = 45 * 1000;
-const NEXT_EXAM_DELAY = NEXT_QUESTION_DELAY_FALLBACK * 2 * 1000;
+const NEXT_EXAM_DELAY = NEXT_QUESTION_DELAY_FALLBACK * 2;
 export const SHOW_ANSWER_DELAY = 2 * 1000;
 export const NEXT_QUESTION_DELAY = 13 * 1000;
 
-// const START_INDEX = 31;
+// const START_INDEX = 30;
 // const GO_FULL_SCREEN = false;
-// const NEXT_QUESTION_DELAY_FALLBACK = 30 * 1000;
-// const NEXT_EXAM_DELAY = 21 * 1000;
+// const NEXT_QUESTION_DELAY_FALLBACK = 5 * 1000;
+// const NEXT_EXAM_DELAY = NEXT_QUESTION_DELAY_FALLBACK * 2;
 // export const SHOW_ANSWER_DELAY = 1 * 1000;
 // export const NEXT_QUESTION_DELAY = 1 * 1000;
 
@@ -51,19 +51,25 @@ const RandomExam = () => {
     console.log("endExam");
     setIsStarted(false);
     setIsEnded(true);
+  }, []);
+
+  useEffect(() => {
+    console.log(1, "endExam useEffect", { isEnded });
+    if (!isEnded) return;
+    console.log(2, "endExam useEffect", { isEnded, NEXT_EXAM_DELAY });
 
     prepareExamTimerIdRef.current = setTimeout(() => {
-      console.log("endExam setTimeout");
+      console.log("endExam setTimeout 1 ", NEXT_EXAM_DELAY / 3);
       generate();
       setIndex(START_INDEX);
       setIsEnded(false);
     }, NEXT_EXAM_DELAY / 3);
 
     nextExamTimerIdRef.current = setTimeout(() => {
-      console.log("endExam nextExamTimerIdRef");
+      console.log("endExam setTimeout 2 ", NEXT_EXAM_DELAY);
       setIsStarted(true);
     }, NEXT_EXAM_DELAY); // this starts new exam
-  }, [generate]);
+  }, [generate, isEnded]);
 
   const nextQuestion = useCallback(() => {
     if (!isStarted) {

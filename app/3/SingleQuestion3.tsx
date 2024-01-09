@@ -45,7 +45,7 @@ export const SingleQuestion3: FC<SingleQuestion3Props> = ({ question, index, nex
 
   const videoEnded = useCallback(() => {
     handleShowAnswer();
-  }, [index]);
+  }, []); // index michal
 
   useEffect(() => {
     const cachedVideoRef = videoRef.current;

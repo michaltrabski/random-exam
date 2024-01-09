@@ -19,7 +19,21 @@ export const Mp3: FC<Mp3Props> = ({ text, autoPlay = false, onEndedCallback, aut
   const mp3Ref = useRef<HTMLAudioElement | null>(null);
   const timerId = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const handleLoadedData = () => {
+  const handleMp3Play = useCallback(async () => {
+    const mp3 = mp3Ref.current;
+
+    if (!mp3) return;
+
+    if (!mp3.paused) {
+      mp3.pause();
+      return;
+    }
+
+    mp3.currentTime = 0;
+    await mp3.play();
+  }, [mp3Ref]);
+
+  const handleLoadedData = useCallback(() => {
     setMp3State(() => "loadeddata");
     console.log("video loadeddata - play mp3 with delay=", autoPlayWithdelay);
 
@@ -28,7 +42,7 @@ export const Mp3: FC<Mp3Props> = ({ text, autoPlay = false, onEndedCallback, aut
     timerId.current = setTimeout(() => {
       handleMp3Play();
     }, autoPlayWithdelay);
-  };
+  }, [autoPlayWithdelay, handleMp3Play]);
 
   const handlePlaying = () => setMp3State(() => "playing");
   const handlePlay = () => setMp3State(() => "play");
@@ -66,21 +80,7 @@ export const Mp3: FC<Mp3Props> = ({ text, autoPlay = false, onEndedCallback, aut
       }
       if (timerId.current) clearTimeout(timerId.current);
     };
-  }, [mp3Ref, handleEnded]);
-
-  const handleMp3Play = useCallback(async () => {
-    const mp3 = mp3Ref.current;
-
-    if (!mp3) return;
-
-    if (!mp3.paused) {
-      mp3.pause();
-      return;
-    }
-
-    mp3.currentTime = 0;
-    await mp3.play();
-  }, [mp3Ref]);
+  }, [mp3Ref, handleEnded, handleLoadedData]);
 
   const src = `${MP3_FOLDER}${textToSlug160(text)}.mp3`;
 

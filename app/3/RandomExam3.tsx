@@ -47,7 +47,7 @@ const RandomExam3 = () => {
       setIsStarted(true);
       setIsEnded(false);
     }, 60 * 1000);
-  }, []);
+  }, [generate]);
 
   const nextQuestion = useCallback(() => {
     if (!isStarted) {

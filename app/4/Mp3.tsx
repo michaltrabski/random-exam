@@ -35,7 +35,6 @@ export const Mp3: FC<Mp3Props> = ({ text, autoPlay = false, onEndedCallback, aut
 
   const handleLoadedData = useCallback(() => {
     setMp3State(() => "loadeddata");
-    console.log("video loadeddata - play mp3 with delay=", autoPlayWithdelay);
 
     if (autoPlayWithdelay === undefined) return;
 

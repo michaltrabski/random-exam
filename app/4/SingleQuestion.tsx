@@ -65,7 +65,7 @@ export const SingleQuestion: FC<SingleQuestionProps> = ({ question, index, nextQ
     if (isMp3EndedRef.current) {
       handleShowAnswer();
     }
-  }, [index]);
+  }, []); // index michal
 
   useEffect(() => {
     const cachedVideoRef = videoRef.current;
@@ -77,7 +77,7 @@ export const SingleQuestion: FC<SingleQuestionProps> = ({ question, index, nextQ
       showAnswerTimerIdRef.current && clearTimeout(showAnswerTimerIdRef.current);
       nextQuestionTimerIdRef.current && clearTimeout(nextQuestionTimerIdRef.current);
     };
-  }, [index, videoEnded]);
+  }, [videoEnded]); // index michal
 
   let rightAnswerText = "";
   if (r === "t") rightAnswerText = "Odpowiedź tak!";
