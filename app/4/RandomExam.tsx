@@ -13,7 +13,7 @@ import ExamEndedView from "./ExamEndedView";
 const START_INDEX = 0;
 const GO_FULL_SCREEN = true;
 const NEXT_QUESTION_DELAY_FALLBACK = 45 * 1000;
-const NEXT_EXAM_DELAY = NEXT_QUESTION_DELAY_FALLBACK * 2;
+const NEXT_EXAM_DELAY = NEXT_QUESTION_DELAY_FALLBACK * 3 + 1;
 export const SHOW_ANSWER_DELAY = 2 * 1000;
 export const NEXT_QUESTION_DELAY = 13 * 1000;
 
