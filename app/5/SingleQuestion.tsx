@@ -111,7 +111,7 @@ export const SingleQuestion: FC<SingleQuestionProps> = ({ question, index, nextQ
           <Mp3
             text={text}
             onEndedCallback={mp3Ended}
-            autoPlayWithdelay={1000}
+            autoPlayWithdelay={1300}
             onErrorCallback={hendleNextQuestionWithDelay}
           />
           <span> {text} </span>
@@ -190,11 +190,11 @@ const Overly = () => {
   useEffect(() => {
     showRefTimerId.current = setTimeout(() => {
       setShow(true);
-    }, 1500);
+    }, 5000);
 
     hideRefTimerId.current = setTimeout(() => {
       setShow(false);
-    }, 4500);
+    }, 8000);
 
     return () => {
       showRefTimerId.current && clearTimeout(showRefTimerId.current);
