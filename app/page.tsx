@@ -16,6 +16,9 @@ export default function Home() {
         <li>
           <Link href="/4">Egzamin 4</Link>
         </li>
+        <li>
+          <Link href="/5">Egzamin 5</Link>
+        </li>
       </ul>
     </>
   );
