@@ -1,0 +1,46 @@
+export const examEndedContent = [
+  `Dzisiaj chciałbym podzielić się z Wami moim sukcesem w zdaniu egzaminu na prawo jazdy kategorii B. Byłem przygotowany na trzydzieści dwa pytania, w tym 20 podstawowych i 12 specjalistycznych. Testy były aktualne na rok 2024, co sprawiło, że musiałem być naprawdę dobrze przygotowany.Szukałem skutecznego sposobu na naukę i trafiłem na portal poznaj-testy.pl. To miejsce okazało się niezwykle pomocne, ponieważ mogłem tam praktykować pytania, które później pojawiły się na egzaminie.Cieszę się, że moje wysiłki się opłaciły, ponieważ zdobyłem wszystkie 74 punkty możliwe do uzyskania. Minimem do zaliczenia było 68 punktów, więc udało mi się to z ogromnym zapasem. Chciałbym zachęcić innych kursantów do nauki na poznaj-testy.pl, ponieważ to naprawdę skuteczny sposób na przygotowanie się do egzaminu. Mam nadzieję, że moje doświadczenie zainspiruje Was do skorzystania z tego portalu i osiągnięcia sukcesu podczas egzaminu na prawo jazdy. Powodzenia!`,
+  "Dzisiaj chciałbym podzielić się z Wami moim sukcesem - udało mi się zdać egzamin na prawo jazdy kategorii B! Byłem przygotowany na wszystko, ponieważ korzystałem z aktualnych testów na poznaj-testy.pl. W sumie było trzydzieści dwa pytania, z czego 20 to pytania podstawowe, a 12 specjalistycznych. Cieszę się, że udało mi się uzyskać perfekcyjne 74 punkty na 74 możliwe do zdobycia. Pamiętajcie, aby osiągnąć pozytywny wynik, wystarczy zdobyć minimum 68 punktów. Dzięki temu portalowi miałem dostęp do najnowszych pytań testowych na rok 2024, co okazało się kluczowe. Zachęcam wszystkich kursantów do skorzystania z tego źródła nauki. Warto być dobrze przygotowanym, a to portal pozwoli wam zdobyć niezbędną wiedzę. Trzymam kciuki za wasze sukcesy na egzaminie!",
+  "Z radością informuję, że właśnie zdałem egzamin na prawo jazdy kat. B z wynikiem 74 na 74 możliwe punkty. Egzamin składał się z trzydzieści dwa pytań, z czego 20 było podstawowych, a 12 specjalistycznych. Zdobyłem pełną punktację, co przewyższa wymagane minimum 68 punktów do zaliczenia. W trakcie przygotowań korzystałem z portalu poznaj-testy.pl, gdzie znalazłem aktualne testy na rok 2024. Gorąco zachęcam wszystkich kursantów do skorzystania z tego źródła w celu skutecznej nauki przed egzaminem na prawo jazdy.",
+  "Po zdaniu egzaminu na prawo jazdy kat. B z dumą podkreślam, że udało mi się osiągnąć perfekcyjny wynik 74 na 74 punkty. Egzamin składał się z trzydzieści dwa pytań, z czego 20 było podstawowych, a 12 specjalistycznych. Przygotowywałem się, ucząc się z aktualnych testów na portalu poznaj-testy.pl. To właśnie tam znalazłem niezbędne materiały, które pozwoliły mi osiągnąć sukces. Dla wszystkich kursantów gorąco polecam skorzystanie z tego portalu, aby zwiększyć swoje szanse na zdanie egzaminu na prawo jazdy.",
+  "Z ogromną satysfakcją donoszę, że udało mi się pomyślnie zdać egzamin na prawo jazdy kat. B, uzyskując doskonały wynik 74 na 74 punkty. Egzamin obejmował trzydzieści dwa pytania, z czego 20 dotyczyło zagadnień podstawowych, a 12 było specjalistycznymi. Przygotowywałem się do niego, korzystając z testów dostępnych na platformie poznaj-testy.pl, gdzie znalazłem aktualne pytania na rok 2024. Mój sukces dowodzi, że to wartościowe źródło nauki. Dlatego z serdecznością zachęcam wszystkich kursantów do skorzystania z tego portalu, aby skutecznie przygotować się do egzaminu na prawo jazdy.",
+  "Zdałem egzamin na prawo jazdy kat. B, uzyskując pełny wynik 74 punktów na 74 możliwe. Egzamin składał się z trzydzieści dwa pytań, z czego 20 było podstawowych, a 12 specjalistycznych. Minimalna punktacja do zaliczenia to 68 punktów. W trakcie nauki korzystałem z testów dostępnych na portalu poznaj-testy.pl, które obejmowały aktualne pytania na rok 2024. Polecam ten portal innym kursantom jako skuteczne źródło przygotowania do egzaminu na prawo jazdy.",
+  "Podczas egzaminu na prawo jazdy kat. B musiałem odpowiedzieć na trzydzieści dwa pytania, z których 20 dotyczyło zagadnień podstawowych, a 12 było specjalistycznymi. W moim przypadku, uzyskując 74 punkty na 74 możliwe, przekroczyłem wymaganą minimalną punktację 68 punktów do zaliczenia egzaminu.  W trakcie przygotowań skorzystałem z platformy poznaj-testy.pl, gdzie miałem dostęp do aktualnych pytań na rok 2024. Portal ten okazał się wartościowym źródłem materiałów edukacyjnych, które pomogły mi skutecznie przygotować się do egzaminu. Obejmowały one zarówno pytania podstawowe, jak i specjalistyczne, co umożliwiło mi pełne zrozumienie zagadnień. Zachęcam innych kursantów do skorzystania z tego portalu jako pomocnej platformy edukacyjnej. Skuteczność mojego przygotowania świadczy o wartości tych materiałów w kontekście zdawania egzaminu na prawo jazdy.",
+];
+
+export const introductionContent = [
+  "W tym wideo prezentujemy trzydzieści dwa pytania z testów na prawo jazdy kategorii B! Pytania są aktualne w styczniu 2024 roku! Zapraszam do nauki pytań!",
+  "W tym filmie przedstawiamy trzydzieści dwa pytania z egzaminu na prawo jazdy kategorii B! Pytania są obowiązujące w styczniu 2024 roku! Zachęcam do zapoznania się z nimi w celu nauki!",
+  "W dzisiejszym nagraniu prezentujemy trzydzieści dwa pytania z testów na prawo jazdy kategorii B! Wszystkie pytania są aktualne na styczeń 2024 roku. Serdecznie zachęcam do zapoznania się z nimi i rozpoczęcia nauki!",
+  "W dzisiejszym materiale przygotowaliśmy dla was trzydzieści dwa pytania z testów na prawo jazdy kategorii B! Pytania są zgodne z obowiązującymi standardami na styczeń 2024 roku. Zapraszam do zgłębiania wiedzy i nauki przed egzaminem!",
+  "W tym nagraniu prezentujemy trzydzieści dwa pytania z aktualnych testów na prawo jazdy kategorii B! Wszystkie pytania są obowiązujące w styczniu 2024 roku. Zachęcam do aktywnej nauki i przygotowań!",
+  "W dzisiejszym wideo przygotowaliśmy dla was trzydzieści dwa pytania z najnowszych testów na prawo jazdy kategorii B! Są one obowiązujące w styczniu 2024 roku. Serdecznie zachęcam do skorzystania z okazji i rozpoczęcia nauki tych pytań już teraz!", // "Witajcie! Dziś razem z wami przechodzimy przez trzydzieści dwa pytania egzaminacyjne na prawo jazdy, by przygotować was do wyzwania, które przed wami.",
+  // "Cześć, kierowcy wirtualni! Zanurzmy się wspólnie w świat trzydzieści dwa pytań teoretycznych dotyczących prawa jazdy, a ja postaram się rozwiać wasze wątpliwości.",
+  // "Zapraszam was do filmu, w którym skupimy się na trzydzieści dwa pytaniach egzaminacyjnych. Zobaczmy, czy jesteście gotowi na wyzwania, jakie stawia przed nami prawo jazdy.",
+  // "Dzisiaj razem rozważymy trzydzieści dwa pytania egzaminacyjne, rzucając światło na najważniejsze aspekty teoretyczne związane z uzyskaniem prawa jazdy.",
+  // "Przygotujcie się na podróż przez trzydzieści dwa pytania egzaminacyjne. W tym filmie rozwiejemy wszelkie wątpliwości dotyczące teoretycznej części zdobywania prawa jazdy.",
+  // "Witam was serdecznie! Dziś skupimy się na analizie trzydzieści dwa pytań egzaminacyjnych związanych z prawem jazdy. Gotowi na rozwiązanie wszelkich trudności?",
+  // "W tej produkcji prześwietlimy trzydzieści dwa pytania teoretyczne z egzaminu na prawo jazdy. Bądźcie gotowi na odkrywanie kluczowych informacji dotyczących bezpiecznej jazdy.",
+  // "Dzisiejszy film poświęcony jest trzydzieści dwa pytaniom egzaminacyjnym z prawa jazdy. Czy uda wam się odpowiedzieć na nie wszystkie poprawnie?",
+  // "Witajcie! W dzisiejszym materiale skupimy się na trzydzieści dwa pytaniach egzaminacyjnych, pomagając wam w przygotowaniach do zdobycia prawa jazdy.",
+  // "Przygotujcie się na głębokie zanurzenie w świat trzydzieści dwa pytań egzaminacyjnych dotyczących teorii prawa jazdy. Razem rozwiejmy wszelkie wątpliwości i przygotujmy was do sukcesu na egzaminie.",
+];
+
+export const persons = [
+  "Krzysztof Woźniak, 25 lat",
+  "Agnieszka Dąbrowska, 20 lat",
+  "Marek Lewandowski, 22 lata",
+  "Ewa Kaczmarek, 18 lat",
+  "Tomasz Zając, 24 lata",
+  "Katarzyna Szymańska, 19 lat",
+  "Adam Wojciechowski, 23 lata",
+  "Natalia Pawłowska, 21 lat",
+  "Michał Kwiatkowski, 26 lat",
+  "Karolina Nowakowska, 22 lata",
+  "Marcin Sobczak, 24 lata",
+  "Monika Górka, 20 lat",
+  "Łukasz Malinowski, 25 lat",
+  "Patrycja Adamczyk, 18 lat",
+  "Robert Wójcik, 26 lat",
+  "Aleksandra Kowalczyk, 19 lat",
+];
