@@ -114,7 +114,7 @@ export const SingleQuestion: FC<SingleQuestionProps> = ({ question, index, nextQ
           <video ref={videoRef} className="w-full" src={src} autoPlay />
         ) : (
           // eslint-disable-next-line @next/next/no-img-element
-          <img className="w-full" src={src} alt={text} />
+          <img className="w-full duration-[10s]XXX scale-150XXX" src={src} alt={text} />
         )}
       </div>
 

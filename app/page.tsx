@@ -20,7 +20,9 @@ export default function Home() {
           <Link href="/5">Egzamin 5</Link>
         </li>
         <li>
-          <Link href="/6">Egzamin 6</Link>
+          <Link href="/6">poziomy 6</Link>
+          <span> | </span>
+          <Link href="/vertical-6">pionowy 6</Link>
         </li>
       </ul>
     </>
