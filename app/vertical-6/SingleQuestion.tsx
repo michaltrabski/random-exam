@@ -74,7 +74,7 @@ export const SingleQuestion: FC<SingleQuestionProps> = ({ question, index, nextQ
     <div className="flex flex-col justify-evenly h-screen bg-slate-600">
       <Logo />
 
-      <div className={`duration-[20s] ${scale} w-full`}>
+      <div className={`duration-[40s] ${scale} w-full`}>
         {src.endsWith(".mp4") ? (
           <video ref={videoRef} className="w-full" src={src} autoPlay />
         ) : (
