@@ -19,6 +19,18 @@ export const NEXT_QUESTION_DELAY = 999; // 13 * 1000;
 
 const RandomExam = () => {
   const [questions32, setQuestions32] = useState<QuestionSmall[]>([]);
+  const [index, setIndex] = useState(START_INDEX);
+  const [isStarted, setIsStarted] = useState(() => false);
+  const [isEnded, setIsEnded] = useState(false);
+  const [unmount, setUnmount] = useState(false);
+
+  useEffect(() => {
+    setUnmount(true);
+
+    setTimeout(() => {
+      setUnmount(false);
+    }, 1000);
+  }, [index]);
 
   const generate = useCallback(() => {
     const { questionsSmall } = questionSmallObj as QuestionSmallObj;
@@ -29,10 +41,6 @@ const RandomExam = () => {
   useEffect(() => {
     generate();
   }, [generate]);
-
-  const [index, setIndex] = useState(START_INDEX);
-  const [isStarted, setIsStarted] = useState(() => false);
-  const [isEnded, setIsEnded] = useState(false);
 
   const nextExamTimerIdRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const prepareExamTimerIdRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -110,7 +118,9 @@ const RandomExam = () => {
 
   return (
     <div>
-      {isStartedAndNotEnded && <SingleQuestion question={currentQuestion} index={index} nextQuestion={nextQuestion} />}
+      {isStartedAndNotEnded && !unmount && (
+        <SingleQuestion question={currentQuestion} index={index} nextQuestion={nextQuestion} />
+      )}
 
       <div className={isNotStartedAndNotEnded ? "" : "hidden"}>
         <h1>

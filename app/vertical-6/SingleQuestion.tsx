@@ -15,6 +15,8 @@ interface SingleQuestionProps {
 }
 
 export const SingleQuestion: FC<SingleQuestionProps> = ({ question, index, nextQuestion }) => {
+  const [scale, setScale] = useState("");
+
   const isVideoEndedRef = useRef(false);
   const isMp3EndedRef = useRef(false);
 
@@ -26,7 +28,7 @@ export const SingleQuestion: FC<SingleQuestionProps> = ({ question, index, nextQ
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const nextQuestionTimerIdRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const { text, media, a, b, c, r } = question;
+  const { text, media } = question;
 
   const src = media ? `${MEDIA_FOLDER}${media}` : "/placeholder_1.png";
 
@@ -40,12 +42,14 @@ export const SingleQuestion: FC<SingleQuestionProps> = ({ question, index, nextQ
     isMp3EndedRef.current = true;
     const isVideo = src.endsWith(".mp4");
 
+    console.log("mp3Ended");
     if (isVideoEndedRef.current || !isVideo) {
       hendleNextQuestionWithDelay();
     }
   };
 
   const videoEnded = useCallback(() => {
+    console.log("videoEnded");
     isVideoEndedRef.current = true;
 
     if (isMp3EndedRef.current) {
@@ -54,6 +58,7 @@ export const SingleQuestion: FC<SingleQuestionProps> = ({ question, index, nextQ
   }, [index]);
 
   useEffect(() => {
+    setScale("scale-[1.8]");
     const cachedVideoRef = videoRef.current;
 
     cachedVideoRef?.addEventListener("ended", videoEnded);
@@ -69,12 +74,12 @@ export const SingleQuestion: FC<SingleQuestionProps> = ({ question, index, nextQ
     <div className="flex flex-col justify-evenly h-screen bg-slate-600">
       <Logo />
 
-      <div className="scale-150 w-full">
+      <div className={`duration-[20s] ${scale} w-full`}>
         {src.endsWith(".mp4") ? (
           <video ref={videoRef} className="w-full" src={src} autoPlay />
         ) : (
           // eslint-disable-next-line @next/next/no-img-element
-          <img className="w-full duration-[10s]XXX scale-150XXX" src={src} alt={text} />
+          <img className="w-full" src={src} alt={text} />
         )}
       </div>
 
