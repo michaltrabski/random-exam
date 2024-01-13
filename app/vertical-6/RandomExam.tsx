@@ -12,10 +12,10 @@ import ExamEndedView from "./ExamEndedView";
 
 const CATEGORY = "b";
 let START_INDEX = 0;
-let GO_FULL_SCREEN = false; // true;
-const NEXT_EXAM_DELAY = 3 * 45 * 1000;
+let GO_FULL_SCREEN = true;
+const NEXT_EXAM_DELAY = 30 * 1000;
 export const SHOW_ANSWER_DELAY = 2 * 1000;
-export const NEXT_QUESTION_DELAY = 999; // 13 * 1000;
+export const NEXT_QUESTION_DELAY = 5 * 1000;
 
 const RandomExam = () => {
   const [questions32, setQuestions32] = useState<QuestionSmall[]>([]);
