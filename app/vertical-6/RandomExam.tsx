@@ -11,8 +11,8 @@ import QuestionsList from "./QuestionsList";
 import ExamEndedView from "./ExamEndedView";
 
 const CATEGORY = "b";
-let START_INDEX = 15;
-let GO_FULL_SCREEN = true;
+export const START_INDEX = 15;
+const GO_FULL_SCREEN = true;
 const NEXT_EXAM_DELAY = 30 * 1000;
 export const SHOW_ANSWER_DELAY = 2 * 1000;
 export const NEXT_QUESTION_DELAY = 5 * 1000;
@@ -117,7 +117,7 @@ const RandomExam = () => {
   const isNotStartedAndNotEnded = !isStarted && !isEnded;
 
   return (
-    <div className="w-[26rem] bg-slate-700">
+    <div className="w-[30rem] ">
       {isStartedAndNotEnded && !unmount && (
         <SingleQuestion question={currentQuestion} index={index} nextQuestion={nextQuestion} />
       )}
