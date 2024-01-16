@@ -12,9 +12,17 @@ interface Mp3Props {
   onEndedCallback?: () => void;
   onErrorCallback?: () => void;
   autoPlayWithdelay?: number;
+  hidden?: boolean;
 }
 
-export const Mp3: FC<Mp3Props> = ({ text, autoPlay = false, onEndedCallback, onErrorCallback, autoPlayWithdelay }) => {
+export const Mp3: FC<Mp3Props> = ({
+  text,
+  autoPlay = false,
+  onEndedCallback,
+  onErrorCallback,
+  autoPlayWithdelay,
+  hidden = false,
+}) => {
   const [mp3State, setMp3State] = useState<Mp3State>("");
 
   const mp3Ref = useRef<HTMLAudioElement | null>(null);
@@ -94,7 +102,12 @@ export const Mp3: FC<Mp3Props> = ({ text, autoPlay = false, onEndedCallback, onE
     <>
       <audio ref={mp3Ref} className="hidden" src={src} controls autoPlay={autoPlay} />
 
-      <button style={{ top: "-3px" }} onClick={handleMp3Play} disabled={mp3State === ""}>
+      <button
+        className={hidden ? "hidden" : ""}
+        style={{ top: "-3px" }}
+        onClick={handleMp3Play}
+        disabled={mp3State === ""}
+      >
         {mp3State === "" && <PlayIcon />}
         {mp3State === "pause" && <PlayIcon />}
         {mp3State === "loadeddata" && <PlayIcon />}

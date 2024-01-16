@@ -5,8 +5,7 @@ import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { QuestionSmall } from "@/data/types";
 import { Mp3 } from "./Mp3";
 import { MEDIA_FOLDER } from "@/constants/constants";
-import { NEXT_QUESTION_DELAY, SHOW_ANSWER_DELAY } from "./RandomExam";
-import { introductionContent } from "./Content";
+import { NEXT_QUESTION_DELAY } from "./RandomExam";
 
 interface SingleQuestionProps {
   question: QuestionSmall;
@@ -83,10 +82,10 @@ export const SingleQuestion: FC<SingleQuestionProps> = ({ question, index, nextQ
         )}
       </div>
 
-      <div className="p-3 text-3xl w-full marker:p-1 text-white">
-        <p className="pb-2">
-          <span> {index + 1}. </span>
+      <div className="p-3 text-2xl w-full marker:p-1 text-white">
+        <p className="pb-2 pr-20">
           <Mp3
+            hidden
             text={text}
             onEndedCallback={mp3Ended}
             autoPlayWithdelay={1300}
